@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <head>
+        <link rel="stylesheet" href="styles.css">
+        <title>Prisoner's Dilemma</title>
+    </head>
+    <body>
+        <header>Prisoner's Dilemma: The Game</header>
+        <div class="rules" id="rules">
+            <div class="label" id="label">Rules</div>
+            1. Each turn, choose to either take the money or pass.<br>
+            2. If only one player takes the money, it is added to their score and the pot resets.<br>
+            3. If both players pass, the money doubles.<br>
+            4. If both players try to take the money, both players lose all their money.<br>
+            5. The first person to $1,000,000 wins.
+        </div>
+        <div class="score" id="score">
+            <div class="play-score" id="play-score"></div>
+            <div class="com-score" id="com-score"></div>
+        </div>
+        <div class="pot" id="pot"></div>
+        <div class="message" id="message">Will you take the money or pass?</div>
+        <div class="options" id="options">
+            <button class="take-money" id="take-money" onClick="takeMoney()">Take the money</button>
+            <button class="pass" id="pass" onClick="pass()">Pass</button>
+        </div>
+        <script src="script.js"></script>
+    </body>
+</html>

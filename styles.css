@@ -1,0 +1,94 @@
+* {
+    text-align: center;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    margin: 0;
+}
+
+header {
+    background-color: #CCC;
+    padding: 20px;
+    font-size: 40px;
+    font-weight: bold;
+}
+
+.label {
+    font-weight: bold;
+    padding-bottom: 10px;
+    font-size: 20px;
+    text-decoration: underline;
+}
+
+.rules {
+    margin: auto;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    background-color: #EEE;
+    width: fit-content;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+.score {
+    display: flex;
+    justify-content: center;
+    gap: 200px;
+    padding: 10px;
+    margin: 20px;
+}
+
+.score > div {
+    background-color: #EEE;
+    min-width: 140px;
+    width: fit-content;
+    padding: 10px;
+    border-radius: 10px;
+    font-size: 20px;
+}
+
+.pot {
+    font-size: 30px;
+    margin: auto;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    background-color: #EEE;
+    width: fit-content;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+.message {
+    margin: auto;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    background-color: #EEE;
+    width: 400px;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+button {
+    width: 150px;
+    padding: 20px;
+    font-weight: bold;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 16px;
+    margin: 40px;
+}
+
+button:hover {
+    opacity: 85%;
+}
+
+button:active {
+    opacity: 100%;
+}
+
+.take-money {
+    background-color: green;
+}
+
+.pass {
+    background-color: red;
+}
