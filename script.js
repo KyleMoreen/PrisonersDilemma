@@ -1,7 +1,8 @@
 const pot = document.getElementById('pot');
 const playerScore = document.getElementById('play-score');
 const computerScore = document.getElementById('com-score');
-const message = document.getElementById('message');
+const result = document.getElementById('result');
+const hint = document.getElementById('hint');
 const takeButton = document.getElementById('take-money');
 const passButton = document.getElementById('pass');
 
@@ -22,7 +23,9 @@ function takeMoney() {
         playCash += cash;
         playerScore.innerText = `Player: $${playCash.toLocaleString()}`;
 
-        message.innerText = 'You took the money!';
+        result.innerText = 'You took the money!';
+
+        hint.innerText = 'The computer seems calm.';
 
         turn = 0;
 
@@ -35,7 +38,9 @@ function takeMoney() {
         comCash = 0;
         computerScore.innerText = `Computer: $${comCash.toLocaleString()}`;
 
-        message.innerText = 'You both tried to take the money and lost everything!';
+        result.innerText = 'You both tried to take the money and lost everything!';
+
+        hint.innerText = 'The computer seems calm.';
 
         turn = 0;
     }
@@ -51,7 +56,7 @@ function pass() {
         cash = cash * 2;
         pot.innerText = `Pot: $${cash.toLocaleString()}`;
 
-        message.innerText = 'You both passed.';
+        result.innerText = 'You both passed.';
 
     } else {
         comCash += cash;
@@ -60,7 +65,9 @@ function pass() {
         cash = 100;
         pot.innerText = `Pot: $${cash.toLocaleString()}`;
 
-        message.innerText = 'The computer took the money!';
+        result.innerText = 'The computer took the money!';
+
+        hint.innerText = 'The computer seems calm.';
 
         turn = 0;
 
@@ -71,17 +78,38 @@ function pass() {
 function comChoice() {
     turn++;
     const odds = Math.ceil(19 / turn) + 1;
+    setHint(odds);
     const choice = Boolean(Math.floor(Math.random() * odds));
     return choice;
 }
 
+function setHint(odds) {
+    if (odds > 10) {
+        hint.innerText = 'The computer seems calm.';
+    } 
+    
+    else if (odds > 5) {
+        hint.innerText = 'The computer seems to be deep in thought.';
+    } 
+    
+    else if (odds > 3) {
+        hint.innerText = 'The computer seems a bit nervous.';
+    }
+
+    else {
+        hint.innerText = 'The computer looks extremely anxious!';
+    }
+}
+
 function checkWin() {
     if (playCash >= 1000000) {
-        message.innerText = 'You win!'
+        result.innerText = 'You win!'
+        hint.innerText = 'The computer seems sad';
         disableButtons();
 
     } else if (comCash >= 1000000) {
-        message.innerText = 'Computer wins.'
+        result.innerText = 'Computer wins.'
+        hint.innerText = 'The computer seems pleased with itself.';
         disableButtons();
     } 
 }
