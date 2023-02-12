@@ -32,7 +32,7 @@ function takeMoney() {
         result.innerText = 'You took the money!';
 
         turn = 0;
-
+        setOdds();
         checkWin();
     } 
     
@@ -45,14 +45,13 @@ function takeMoney() {
         computerScore.innerText = `Computer: $${comCash.toLocaleString()}`;
 
         result.innerText = 'You both tried to take the money and lost everything!';
-
+        
         turn = 0;
+        setOdds();
     }
 
     cash = 100;
     pot.innerText = `Pot: $${cash.toLocaleString()}`;
-
-    setOdds();
 }
 
 //when pass button is pressed
@@ -65,6 +64,8 @@ function pass() {
         pot.innerText = `Pot: $${cash.toLocaleString()}`;
 
         result.innerText = 'You both passed.';
+
+        setOdds();
     } 
     
     //if player passes and com takes money
@@ -78,11 +79,9 @@ function pass() {
         result.innerText = 'The computer took the money!';
 
         turn = 0;
-
+        setOdds();
         checkWin();
     }
-
-    setOdds();
 }
 
 //set odds for computer choice
