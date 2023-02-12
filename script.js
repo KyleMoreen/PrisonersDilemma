@@ -15,6 +15,10 @@ let comCash = 0;
 let turn = 0;
 let odds = 19;
 
+//initialize booleans to check if the money was taken last turn or not
+let playerTook = false;
+let comTook = false;
+
 //add initial cash values to screen
 pot.innerText = `Pot: $${cash.toLocaleString()}`;
 playerScore.innerText = `Player: $${playCash.toLocaleString()}`;
@@ -22,10 +26,25 @@ computerScore.innerText = `Computer: $${comCash.toLocaleString()}`;
 
 //when take money button is pressed
 function takeMoney() {
-    const comPass = comChoice();
+
+    //decide whether com will pass or not
+    let comPass;
+
+    if (comTook) {
+        comPass = true;
+    }
+
+    else {
+        comPass = comChoice();
+    }
 
     //if player takes money and com passes
     if (comPass) {
+
+        if (comTook) {
+            comTook = false;
+        }
+
         playCash += cash;
         playerScore.innerText = `Player: $${playCash.toLocaleString()}`;
 
@@ -46,9 +65,13 @@ function takeMoney() {
 
         result.innerText = 'You both tried to take the money and lost everything!';
         
+        comTook = true;
+
         turn = 0;
         setOdds();
     }
+
+    disableTake();
 
     cash = 100;
     pot.innerText = `Pot: $${cash.toLocaleString()}`;
@@ -56,20 +79,25 @@ function takeMoney() {
 
 //when pass button is pressed
 function pass() {
-    const comPass = comChoice();
 
-    //if both player and com pass
-    if (comPass) {
-        cash = cash * 2;
-        pot.innerText = `Pot: $${cash.toLocaleString()}`;
+    //decide whether com will pass or not
+    let comPass;
 
-        result.innerText = 'You both passed.';
+    if (comTook) {
+        comPass = true;
+    }
 
-        setOdds();
-    } 
-    
-    //if player passes and com takes money
     else {
+        comPass = comChoice();
+    }
+
+    //if player took last turn, reset value to false
+    if (playerTook) {
+        enableTake();
+    }
+
+    //if player passes and com takes money
+    if (!comPass) {
         comCash += cash;
         computerScore.innerText = `Computer: $${comCash.toLocaleString()}`;
     
@@ -78,60 +106,96 @@ function pass() {
 
         result.innerText = 'The computer took the money!';
 
+        comTook = true;
+
         turn = 0;
         setOdds();
         checkWin();
     }
+
+    //if both player and com pass
+    else {
+
+        if (comTook) {
+            comTook = false;
+        }
+
+        cash = cash * 2;
+        pot.innerText = `Pot: $${cash.toLocaleString()}`;
+
+        result.innerText = 'You both passed.';
+
+        setOdds();
+    } 
+}
+
+function disableTake() {
+    playerTook = true;
+    takeButton.disabled = true;
+    takeButton.style.backgroundColor = 'grey';
+}
+
+function enableTake() {
+    playerTook = false;
+    takeButton.disabled = false;
+    takeButton.style.backgroundColor = 'green';
 }
 
 //set odds for computer choice
 function setOdds() {
     turn++;
-    const randNum = Math.floor(Math.random() * 10);
 
-    //set odds based on turn and random number
-    if (turn < 5) {
-        if (randNum === 0) {
-            odds = 2;
-            hint.innerText = 'The computer looks extremely anxious!';
-        }
-        else if (randNum < 3) {
-            odds = 5;
-            hint.innerText = 'The computer seems a bit nervous.';
-        }
-        else {
-            odds = 20;
-            hint.innerText = 'The computer seems calm.';
-        }
-    }
-
-    else if (turn < 10) {
-        if (randNum < 2) {
-            odds = 2;
-            hint.innerText = 'The computer looks extremely anxious!';
-        }
-        else if (randNum < 7){
-            odds = 5;
-            hint.innerText = 'The computer seems a bit nervous.';
-        }
-        else {
-            odds = 20;
-            hint.innerText = 'The computer seems calm.';
-        }
+    if (comTook) {
+        hint.innerText = "You can't tell what the computer is thinking.";
     }
 
     else {
-        if (randNum === 0) {
-            odds = 20;
-            hint.innerText = 'The computer seems calm.';
+        const randNum = Math.floor(Math.random() * 10);
+
+        //set odds based on turn and random number
+        if (turn < 5) {
+            if (randNum === 0) {
+                odds = 2;
+                hint.innerText = 'The computer looks extremely anxious!';
+            }
+            else if (randNum < 3) {
+                odds = 5;
+                hint.innerText = 'The computer seems a bit nervous.';
+            }
+            else {
+                odds = 20;
+                hint.innerText = 'The computer seems calm.';
+            }
         }
-        else if (randNum < 3) {
-            odds = 5;
-            hint.innerText = 'The computer seems a bit nervous.';
+
+        else if (turn < 10) {
+            if (randNum < 2) {
+                odds = 2;
+                hint.innerText = 'The computer looks extremely anxious!';
+            }
+            else if (randNum < 7){
+                odds = 5;
+                hint.innerText = 'The computer seems a bit nervous.';
+            }
+            else {
+                odds = 20;
+                hint.innerText = 'The computer seems calm.';
+            }
         }
+
         else {
-            odds = 2;
-            hint.innerText = 'The computer looks extremely anxious!';
+            if (randNum === 0) {
+                odds = 20;
+                hint.innerText = 'The computer seems calm.';
+            }
+            else if (randNum < 3) {
+                odds = 5;
+                hint.innerText = 'The computer seems a bit nervous.';
+            }
+            else {
+                odds = 2;
+                hint.innerText = 'The computer looks extremely anxious!';
+            }
         }
     }
 }
