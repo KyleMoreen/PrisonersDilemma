@@ -31,8 +31,6 @@ function takeMoney() {
 
         result.innerText = 'You took the money!';
 
-        hint.innerText = 'The computer seems calm.';
-
         turn = 0;
 
         checkWin();
@@ -47,8 +45,6 @@ function takeMoney() {
         computerScore.innerText = `Computer: $${comCash.toLocaleString()}`;
 
         result.innerText = 'You both tried to take the money and lost everything!';
-
-        hint.innerText = 'The computer seems calm.';
 
         turn = 0;
     }
@@ -80,8 +76,6 @@ function pass() {
         pot.innerText = `Pot: $${cash.toLocaleString()}`;
 
         result.innerText = 'The computer took the money!';
-
-        hint.innerText = 'The computer seems calm.';
 
         turn = 0;
 
