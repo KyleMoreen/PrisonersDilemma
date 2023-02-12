@@ -11,6 +11,50 @@ header {
     font-weight: bold;
 }
 
+.difficulty {
+    margin-top: 10px;
+    display: flex;
+    justify-content: center;
+}
+
+.difficulty > button {
+    filter: opacity(50%);
+}
+
+button {
+    width: 150px;
+    padding: 10px;
+    font-weight: bold;
+    color: white;
+    border-radius: 10px;
+    font-size: 16px;
+    margin: 10px;
+}
+
+.easy {
+    background: green;
+    border: none;
+}
+
+.medium {
+    background-color: rgb(240, 200, 0);
+    border: none;
+}
+
+.hard {
+    background-color: red;
+    border: none;
+}
+
+button:hover {
+    opacity: 85%;
+}
+
+button:active {
+    opacity: 100%;
+}
+
+
 .label {
     font-weight: bold;
     padding-bottom: 10px;
@@ -66,23 +110,8 @@ header {
     border-radius: 10px;
 }
 
-button {
-    width: 150px;
-    padding: 10px;
-    font-weight: bold;
-    color: white;
+.options > button {
     border: none;
-    border-radius: 10px;
-    font-size: 16px;
-    margin: 10px;
-}
-
-button:hover {
-    opacity: 85%;
-}
-
-button:active {
-    opacity: 100%;
 }
 
 .take-money {

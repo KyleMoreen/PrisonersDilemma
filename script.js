@@ -1,9 +1,15 @@
 //set elements inside variables for later use
+const easyButton = document.getElementById('easy');
+const medButton = document.getElementById('medium');
+const hardButton = document.getElementById('hard');
+
 const pot = document.getElementById('pot');
 const playerScore = document.getElementById('play-score');
 const computerScore = document.getElementById('com-score');
+
 const result = document.getElementById('result');
 const hint = document.getElementById('hint');
+
 const takeButton = document.getElementById('take-money');
 const passButton = document.getElementById('pass');
 
@@ -15,6 +21,11 @@ let comCash = 0;
 let turn = 0;
 let odds = 19;
 
+let winNum = 10000;
+let turnCap = 3;
+
+easyButton.style.filter = 'opacity(100%)';
+
 //initialize booleans to check if the money was taken last turn or not
 let playerTook = false;
 let comTook = false;
@@ -23,6 +34,45 @@ let comTook = false;
 pot.innerText = `Pot: $${cash.toLocaleString()}`;
 playerScore.innerText = `Player: $${playCash.toLocaleString()}`;
 computerScore.innerText = `Computer: $${comCash.toLocaleString()}`;
+
+//reset game to default values
+function resetGame() {
+    cash = 100;
+    playCash = 0;
+    comCash = 0;
+
+    turn = 0;
+    odds = 19;
+
+    playerTook = false;
+    comTook = false;
+
+    enableTake();
+    enablePass();
+
+    pot.innerText = `Pot: $${cash.toLocaleString()}`;
+    playerScore.innerText = `Player: $${playCash.toLocaleString()}`;
+    computerScore.innerText = `Computer: $${comCash.toLocaleString()}`;
+
+    result.innerText = 'Will you take the money or pass?'
+    hint.innerText = 'The computer seems calm.'
+}
+
+//set difficulty of game based on button press
+function setDifficulty(obj) {
+    resetColor();
+    obj.style.filter = 'opacity(100%)';
+    winNum = obj.getAttribute('data-win');
+    turnCap = obj.getAttribute('data-turncap')
+    resetGame();
+}
+
+//reset difficulty button colors when game difficulty is changed
+function resetColor() {
+    easyButton.style.filter = 'opacity(50%)';
+    medButton.style.filter = 'opacity(50%)';
+    hardButton.style.filter = 'opacity(50%)';
+}
 
 //when take money button is pressed
 function takeMoney() {
@@ -50,7 +100,9 @@ function takeMoney() {
 
         result.innerText = 'You took the money!';
 
-        turn = 0;
+        playerTook = true;
+
+        setTurn();
         setOdds();
         checkWin();
     } 
@@ -65,9 +117,10 @@ function takeMoney() {
 
         result.innerText = 'You both tried to take the money and lost everything!';
         
+        playerTook = true;
         comTook = true;
 
-        turn = 0;
+        setTurn();
         setOdds();
     }
 
@@ -93,6 +146,7 @@ function pass() {
 
     //if player took last turn, reset value to false
     if (playerTook) {
+        playerTook = false;
         enableTake();
     }
 
@@ -108,7 +162,7 @@ function pass() {
 
         comTook = true;
 
-        turn = 0;
+        setTurn();
         setOdds();
         checkWin();
     }
@@ -125,26 +179,33 @@ function pass() {
 
         result.innerText = 'You both passed.';
 
+        setTurn();
         setOdds();
     } 
 }
 
 function disableTake() {
-    playerTook = true;
     takeButton.disabled = true;
     takeButton.style.backgroundColor = 'grey';
 }
 
 function enableTake() {
-    playerTook = false;
     takeButton.disabled = false;
     takeButton.style.backgroundColor = 'green';
 }
 
+function disablePass() {
+    passButton.disabled = true;
+    passButton.style.backgroundColor = 'grey';
+}
+
+function enablePass() {
+    passButton.disabled = false;
+    passButton.style.backgroundColor = 'red';
+}
+
 //set odds for computer choice
 function setOdds() {
-    turn++;
-
     if (comTook) {
         hint.innerText = "You can't tell what the computer is thinking.";
     }
@@ -153,7 +214,7 @@ function setOdds() {
         const randNum = Math.floor(Math.random() * 10);
 
         //set odds based on turn and random number
-        if (turn < 5) {
+        if (turn < turnCap) {
             if (randNum === 0) {
                 odds = 2;
                 hint.innerText = 'The computer looks extremely anxious!';
@@ -168,7 +229,7 @@ function setOdds() {
             }
         }
 
-        else if (turn < 10) {
+        else if (turn < (turnCap * 2)) {
             if (randNum < 2) {
                 odds = 2;
                 hint.innerText = 'The computer looks extremely anxious!';
@@ -200,6 +261,16 @@ function setOdds() {
     }
 }
 
+function setTurn() {
+    if (!playerTook && !comTook) {
+        turn++;
+    }
+
+    else {
+        turn = 0
+    }
+}
+
 //determine com choice
 function comChoice() {
     const choice = Boolean(Math.floor(Math.random() * odds));
@@ -208,20 +279,17 @@ function comChoice() {
 
 //check if someone has won yet
 function checkWin() {
-    if (playCash >= 1000000) {
+    if (playCash >= winNum) {
         result.innerText = 'You win!'
-        hint.innerText = 'The computer seems sad';
-        disableButtons();
-
-    } else if (comCash >= 1000000) {
+        hint.innerText = 'The computer seems sad.';
+        disableTake();
+        disablePass();
+    } 
+    
+    else if (comCash >= winNum) {
         result.innerText = 'Computer wins.'
         hint.innerText = 'The computer seems pleased with itself.';
-        disableButtons();
+        disableTake();
+        disablePass();
     } 
-}
-
-//if a player wins, disable buttons
-function disableButtons() {
-    takeButton.disabled = true;
-    passButton.disabled = true;
 }

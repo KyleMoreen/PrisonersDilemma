@@ -7,6 +7,20 @@
     </head>
     <body>
         <header>Prisoner's Dilemma: The Game</header>
+        <div class="difficulty" id="difficulty">
+            <button class="easy" id="easy" data-win="10000" data-turncap="3" onClick="setDifficulty(this)">
+                Easy<br>
+                $10,000
+            </button>
+            <button class="medium" id="medium" data-win="100000" data-turncap="4" onClick="setDifficulty(this)">
+                Medium<br>
+                $100,000
+            </button>
+            <button class="hard" id="hard" data-win="1000000" data-turncap="5" onClick="setDifficulty(this)">
+                Hard<br>
+                $1,000,000
+            </button>
+        </div>
         <div class="rules" id="rules">
             <div class="label" id="label">Rules</div>
             1. Each turn, choose to either take the money or pass.<br>
@@ -14,7 +28,6 @@
             3. If both players pass, the money doubles.<br>
             4. If both players try to take the money, both players lose all their money.<br>
             5. You cannot take the money if you took money last turn.<br>
-            6. The first person to $1,000,000 wins.
         </div>
         <div class="score" id="score">
             <div class="play-score" id="play-score"></div>
