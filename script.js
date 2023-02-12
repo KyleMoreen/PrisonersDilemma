@@ -91,20 +91,55 @@ function pass() {
     setOdds();
 }
 
-//set odds for computer choice.
+//set odds for computer choice
 function setOdds() {
     turn++;
+    const randNum = Math.floor(Math.random() * 10);
+
+    //set odds based on turn and random number
     if (turn < 5) {
-        odds = 20;
-        hint.innerText = 'The computer seems calm.';
+        if (randNum === 0) {
+            odds = 2;
+            hint.innerText = 'The computer looks extremely anxious!';
+        }
+        else if (randNum < 3) {
+            odds = 5;
+            hint.innerText = 'The computer seems a bit nervous.';
+        }
+        else {
+            odds = 20;
+            hint.innerText = 'The computer seems calm.';
+        }
     }
+
     else if (turn < 10) {
-        odds = 5;
-        hint.innerText = 'The computer seems a bit nervous.';
+        if (randNum < 2) {
+            odds = 2;
+            hint.innerText = 'The computer looks extremely anxious!';
+        }
+        else if (randNum < 7){
+            odds = 5;
+            hint.innerText = 'The computer seems a bit nervous.';
+        }
+        else {
+            odds = 20;
+            hint.innerText = 'The computer seems calm.';
+        }
     }
+
     else {
-        odds = 2;
-        hint.innerText = 'The computer looks extremely anxious!';
+        if (randNum === 0) {
+            odds = 20;
+            hint.innerText = 'The computer seems calm.';
+        }
+        else if (randNum < 3) {
+            odds = 5;
+            hint.innerText = 'The computer seems a bit nervous.';
+        }
+        else {
+            odds = 2;
+            hint.innerText = 'The computer looks extremely anxious!';
+        }
     }
 }
 
