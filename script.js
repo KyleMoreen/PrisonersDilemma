@@ -1,3 +1,4 @@
+//set elements inside variables for later use
 const pot = document.getElementById('pot');
 const playerScore = document.getElementById('play-score');
 const computerScore = document.getElementById('com-score');
@@ -6,19 +7,24 @@ const hint = document.getElementById('hint');
 const takeButton = document.getElementById('take-money');
 const passButton = document.getElementById('pass');
 
+//initialize variables
 let cash = 100;
 let playCash = 0;
 let comCash = 0;
 
 let turn = 0;
+let odds = 19;
 
+//add initial cash values to screen
 pot.innerText = `Pot: $${cash.toLocaleString()}`;
 playerScore.innerText = `Player: $${playCash.toLocaleString()}`;
 computerScore.innerText = `Computer: $${comCash.toLocaleString()}`;
 
+//when take money button is pressed
 function takeMoney() {
     const comPass = comChoice();
 
+    //if player takes money and com passes
     if (comPass) {
         playCash += cash;
         playerScore.innerText = `Player: $${playCash.toLocaleString()}`;
@@ -30,8 +36,10 @@ function takeMoney() {
         turn = 0;
 
         checkWin();
-
-    } else {
+    } 
+    
+    //if player and com both take money
+    else {
         playCash = 0;
         playerScore.innerText = `Player: $${playCash.toLocaleString()}`;
 
@@ -47,18 +55,24 @@ function takeMoney() {
 
     cash = 100;
     pot.innerText = `Pot: $${cash.toLocaleString()}`;
+
+    setOdds();
 }
 
+//when pass button is pressed
 function pass() {
     const comPass = comChoice();
 
+    //if both player and com pass
     if (comPass) {
         cash = cash * 2;
         pot.innerText = `Pot: $${cash.toLocaleString()}`;
 
         result.innerText = 'You both passed.';
-
-    } else {
+    } 
+    
+    //if player passes and com takes money
+    else {
         comCash += cash;
         computerScore.innerText = `Computer: $${comCash.toLocaleString()}`;
     
@@ -73,34 +87,34 @@ function pass() {
 
         checkWin();
     }
+
+    setOdds();
 }
 
-function comChoice() {
+//set odds for computer choice.
+function setOdds() {
     turn++;
-    const odds = Math.ceil(19 / turn) + 1;
-    setHint(odds);
-    const choice = Boolean(Math.floor(Math.random() * odds));
-    return choice;
-}
-
-function setHint(odds) {
-    if (odds > 10) {
+    if (turn < 5) {
+        odds = 20;
         hint.innerText = 'The computer seems calm.';
-    } 
-    
-    else if (odds > 5) {
-        hint.innerText = 'The computer seems to be deep in thought.';
-    } 
-    
-    else if (odds > 3) {
+    }
+    else if (turn < 10) {
+        odds = 5;
         hint.innerText = 'The computer seems a bit nervous.';
     }
-
     else {
+        odds = 2;
         hint.innerText = 'The computer looks extremely anxious!';
     }
 }
 
+//determine com choice
+function comChoice() {
+    const choice = Boolean(Math.floor(Math.random() * odds));
+    return choice;
+}
+
+//check if someone has won yet
 function checkWin() {
     if (playCash >= 1000000) {
         result.innerText = 'You win!'
@@ -114,6 +128,7 @@ function checkWin() {
     } 
 }
 
+//if a player wins, disable buttons
 function disableButtons() {
     takeButton.disabled = true;
     passButton.disabled = true;
