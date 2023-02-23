@@ -4,11 +4,19 @@
     margin: 0;
 }
 
-header {
+header, footer {
     background-color: #CCC;
     padding: 20px;
+}
+
+header {
     font-size: 40px;
     font-weight: bold;
+    margin-bottom: 10px;
+}
+
+footer {
+    margin-top: 10px;
 }
 
 .difficulty {
@@ -53,7 +61,6 @@ button:hover {
 button:active {
     opacity: 100%;
 }
-
 
 .label {
     font-weight: bold;
@@ -120,4 +127,12 @@ button:active {
 
 .pass {
     background-color: red;
+}
+
+a:hover {
+    font-weight: bold;
+}
+
+a:visited {
+    color: black;
 }
