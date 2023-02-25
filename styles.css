@@ -23,6 +23,7 @@ footer {
     margin-top: 10px;
     display: flex;
     justify-content: center;
+    flex-wrap: wrap;
 }
 
 .difficulty > button {
@@ -74,7 +75,7 @@ button:active {
     margin-top: 20px;
     margin-bottom: 10px;
     background-color: #EEE;
-    width: fit-content;
+    max-width: 500px;
     padding: 20px;
     border-radius: 10px;
 }
@@ -82,18 +83,20 @@ button:active {
 .score {
     display: flex;
     justify-content: center;
-    gap: 200px;
     padding: 10px;
-    margin: 10px;
+    margin: auto;
+    max-width: 600px;
+    flex-wrap: wrap;
 }
 
 .score > div {
     background-color: #EEE;
     min-width: 140px;
-    width: fit-content;
+    max-width: 500px;
     padding: 10px;
     border-radius: 10px;
     font-size: 20px;
+    margin: 10px auto 10px auto; 
 }
 
 .pot {
@@ -112,9 +115,16 @@ button:active {
     margin-top: 20px;
     margin-bottom: 20px;
     background-color: #EEE;
-    width: 400px;
+    max-width: 400px;
     padding: 20px;
     border-radius: 10px;
+}
+
+.options {
+    display: flex;
+    justify-content: center;
+    margin: auto;
+    flex-wrap: wrap;
 }
 
 .options > button {
