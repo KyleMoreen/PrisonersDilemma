@@ -140,7 +140,7 @@ button:active {
 }
 
 a:hover {
-    font-weight: bold;
+    font-weight: bolder;
 }
 
 a:visited {
